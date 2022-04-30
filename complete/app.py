@@ -19,13 +19,13 @@ class Users(db.Model):
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    #si la peticion es de tipo post 
+    #si la peticion es de tipo post o envio
     if request.method == "POST":
-        #ciframos la contraseña pasada en hash
+        #ciframos la contraseña pasada en hash desde html
         hashed_pw = generate_password_hash(request.form["password"], method="sha256")
-        #obtenemos el usuario a username y la password cifrada
+        #obtenemos el usuario desde username y la password cifrada
         new_user = User(request.form["username"], password = hashed_pw)
-        db.session.add(new_user)#añadimos los elementos a la base de datos
+        db.session.add(new_user)#añadimos/ enviamos los elementos a la base de datos
         db.session.commit()#guardamos cambios
 
         return "You've registered succesfully"
