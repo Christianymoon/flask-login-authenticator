@@ -6,9 +6,9 @@ Sign Up
 {% block content %}
 
 <h1>Sing Up</h1>
-<form action="post" action="{{ url_for('signup') }}">
+<form method="post" action="{{ url_for('signup') }}">
     <p><input name="username" type="text"></p>
-    <p><input type="password" name="password"></p>
+    <p><input name="password", type="password"></p>
     <input type="submit", value="Sing Up">
 </form>
 
