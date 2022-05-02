@@ -16,6 +16,22 @@ class Users(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
 
+@app.route("/")
+def index():
+
+     return render_template("index.html")
+
+
+@app.route("/search")
+def search():
+    nickname= request.args.get("nickname")
+
+    user = Users.query.filter_by(username=nickname).first()
+
+    if user:
+        return user.username
+    return "User not found"
+
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -33,7 +49,19 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route("/login", methods=["GET", "POST"])
 
+def login():
+    #si la peticion es de tipo post
+    if request.method == "POST":
+        #Accessing the data in database -filter username html
+        user = Users.query.filter_by(username=request.form["username"]).first()
+        #si el usuario y la contraseña coinciden 
+        if user and check_password_hash(user.password, request.form["password"]):
+        
+            return "Login succesfully"
+        return "Login failed"
+    return render_template("login.html")
 
 
 
